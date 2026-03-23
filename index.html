@@ -1,4 +1,4 @@
-// Улучшенная функция копирования с поддержкой file://
+// Функция копирования одного правила
 function copy(button) {
     let textElement = button.parentElement.querySelector(".ruleText");
     let titleElement = button.parentElement.querySelector("h2");
@@ -21,7 +21,7 @@ function copyToClipboard(text, button) {
     }
 }
 
-// Fallback метод для старых браузеров и file://
+// Fallback метод для старых браузеров
 function fallbackCopy(text, button) {
     const textarea = document.createElement("textarea");
     textarea.value = text;
@@ -57,7 +57,6 @@ function showCopySuccess(button) {
 }
 
 function showCopyError(button) {
-    let originalText = button.innerHTML;
     button.innerHTML = "❌ Ошибка!";
     button.style.background = "linear-gradient(135deg, #ff0000, #ff6666)";
     
