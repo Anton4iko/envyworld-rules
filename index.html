@@ -1,238 +1,96 @@
-// Функция копирования одного правила
-function copy(button) {
-    let textElement = button.parentElement.querySelector(".ruleText");
-    let titleElement = button.parentElement.querySelector("h2");
-    let text = `${titleElement.innerText}\n\n${textElement.innerText}`;
-    
-    copyToClipboard(text, button);
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>EnvyWorld Rules | Официальные правила</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-// Универсальная функция копирования
-function copyToClipboard(text, button) {
-    // Пробуем современный метод
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-            showCopySuccess(button);
-        }).catch(() => {
-            fallbackCopy(text, button);
-        });
-    } else {
-        fallbackCopy(text, button);
-    }
-}
+    <div class="container">
+        <h1 class="title">
+            ✨ EnvyWorld Rules ✨
+        </h1>
 
-// Fallback метод для старых браузеров
-function fallbackCopy(text, button) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.style.position = "fixed";
-    textarea.style.top = "-9999px";
-    textarea.style.left = "-9999px";
-    document.body.appendChild(textarea);
-    textarea.select();
-    
-    try {
-        const success = document.execCommand("copy");
-        if (success) {
-            showCopySuccess(button);
-        } else {
-            showCopyError(button);
-        }
-    } catch (err) {
-        showCopyError(button);
-    }
-    
-    document.body.removeChild(textarea);
-}
+        <div class="search-box">
+            <input type="text" id="search" placeholder="🔍 Поиск по правилам...">
+        </div>
 
-function showCopySuccess(button) {
-    let originalText = button.innerHTML;
-    button.innerHTML = "✅ Скопировано!";
-    button.style.transform = "scale(0.95)";
-    
-    setTimeout(() => {
-        button.innerHTML = "📋 Копировать правило";
-        button.style.transform = "";
-    }, 1500);
-}
+        <button class="copy-all" id="copyAllBtn">
+            📑 Копировать все правила
+        </button>
 
-function showCopyError(button) {
-    button.innerHTML = "❌ Ошибка!";
-    button.style.background = "linear-gradient(135deg, #ff0000, #ff6666)";
-    
-    setTimeout(() => {
-        button.innerHTML = "📋 Копировать правило";
-        button.style.background = "";
-    }, 1500);
-}
+        <div class="rules-list">
+            <!-- Правило 1 -->
+            <div class="rule-card">
+                <h2>1. Общие правила</h2>
+                <div class="rule-text">
+                    • Игрок обязан соблюдать правила проекта.<br>
+                    • Незнание правил не освобождает от ответственности.<br>
+                    • Администрация имеет право изменять правила без предупреждения.<br>
+                    • Запрещён обход любых видов наказаний.<br>
+                    • Уважайте администрацию и других игроков.
+                </div>
+                <button class="copy-rule">📋 Копировать</button>
+            </div>
 
-// Функция копирования всех правил
-function copyAll() {
-    let rules = document.querySelectorAll(".rule");
-    let text = "📜 ПРАВИЛА ПРОЕКТА ENVYWORLD 📜\n\n";
-    let separator = "=".repeat(50) + "\n\n";
-    
-    rules.forEach((rule, index) => {
-        let title = rule.querySelector("h2").innerText;
-        let content = rule.querySelector(".ruleText").innerText;
-        text += `${title}\n${content}\n\n${separator}`;
-    });
-    
-    text += "📅 Дата: " + new Date().toLocaleDateString('ru-RU') + "\n";
-    text += "✨ Соблюдайте правила! ✨";
-    
-    copyToClipboard(text, document.querySelector(".copyAll"));
-    showNotification("✅ Правила скопированы!");
-}
+            <!-- Правило 2 -->
+            <div class="rule-card">
+                <h2>2. Правила чата</h2>
+                <div class="rule-text">
+                    • Запрещены оскорбления и провокации.<br>
+                    • Запрещён флуд, спам и чрезмерное использование капса.<br>
+                    • Запрещена реклама сторонних ресурсов.<br>
+                    • Запрещены угрозы в любой форме.<br>
+                    • Запрещён мат и нецензурная лексика.
+                </div>
+                <button class="copy-rule">📋 Копировать</button>
+            </div>
 
-// Функция поиска правил
-function searchRules() {
-    let input = document.getElementById("search");
-    let searchText = input.value.toLowerCase().trim();
-    let rules = document.querySelectorAll(".rule");
-    let foundCount = 0;
-    
-    rules.forEach(rule => {
-        let text = rule.innerText.toLowerCase();
-        
-        if (searchText === "" || text.includes(searchText)) {
-            rule.style.display = "block";
-            rule.style.animation = "none";
-            rule.offsetHeight;
-            rule.style.animation = "fadeRule 0.5s ease";
-            foundCount++;
-            
-            if (searchText !== "") {
-                highlightText(rule, searchText);
-            } else {
-                removeHighlight(rule);
-            }
-        } else {
-            rule.style.display = "none";
-        }
-    });
-    
-    let searchInput = document.getElementById("search");
-    if (searchText !== "") {
-        if (foundCount > 0) {
-            searchInput.style.boxShadow = "0 0 20px #00ff00";
-            showNotification(`🔍 Найдено: ${foundCount}`);
-        } else {
-            searchInput.style.boxShadow = "0 0 20px #ff0000";
-            showNotification("❌ Ничего не найдено");
-        }
-        setTimeout(() => {
-            searchInput.style.boxShadow = "";
-        }, 1000);
-    } else {
-        removeAllHighlights();
-    }
-}
+            <!-- Правило 3 -->
+            <div class="rule-card">
+                <h2>3. Игровой процесс</h2>
+                <div class="rule-text">
+                    • Запрещено использование читов и сторонних программ.<br>
+                    • Запрещён гриферство и порча чужих построек.<br>
+                    • Запрещён обман, мошенничество и вымогательство.<br>
+                    • Запрещена продажа игровых аккаунтов.<br>
+                    • Запрещено использование багов и ошибок игры.
+                </div>
+                <button class="copy-rule">📋 Копировать</button>
+            </div>
 
-// Подсветка текста
-function highlightText(rule, searchText) {
-    let textElement = rule.querySelector(".ruleText");
-    let originalText = textElement.innerText;
-    let regex = new RegExp(`(${searchText})`, 'gi');
-    let highlightedText = originalText.replace(regex, '<mark style="background: rgba(255, 0, 200, 0.4); color: white; padding: 2px 4px; border-radius: 3px;">$1</mark>');
-    textElement.innerHTML = highlightedText;
-}
+            <!-- Правило 4 -->
+            <div class="rule-card">
+                <h2>4. Технические правила</h2>
+                <div class="rule-text">
+                    • Запрещено использование VPN для обхода блокировок.<br>
+                    • Запрещены DDoS-атаки на сервер.<br>
+                    • Запрещено создание множественных аккаунтов (мульти-аккаунтинг).<br>
+                    • Запрещена передача аккаунта третьим лицам.<br>
+                    • Соблюдайте безопасность своего аккаунта.
+                </div>
+                <button class="copy-rule">📋 Копировать</button>
+            </div>
 
-function removeHighlight(rule) {
-    let textElement = rule.querySelector(".ruleText");
-    textElement.innerHTML = textElement.innerText;
-}
+            <!-- Правило 5 -->
+            <div class="rule-card">
+                <h2>5. Санкции и наказания</h2>
+                <div class="rule-text">
+                    • За нарушение правил применяются санкции.<br>
+                    • Предупреждение — за мелкие нарушения.<br>
+                    • Мут (блокировка чата) — за нарушения в чате.<br>
+                    • Бан (блокировка аккаунта) — за серьёзные нарушения.<br>
+                    • Перманентный бан — за особо тяжкие нарушения.
+                </div>
+                <button class="copy-rule">📋 Копировать</button>
+            </div>
+        </div>
+    </div>
 
-function removeAllHighlights() {
-    document.querySelectorAll(".ruleText").forEach(element => {
-        element.innerHTML = element.innerText;
-    });
-}
+    <button class="go-top" id="goTopBtn">⬆️</button>
 
-// Уведомления
-function showNotification(message) {
-    let notification = document.createElement("div");
-    notification.innerHTML = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(10px);
-        color: #ff00c8;
-        border-radius: 10px;
-        font-weight: bold;
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-        border-left: 3px solid #ff00c8;
-        font-size: 14px;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = "slideOut 0.3s ease";
-        setTimeout(() => notification.remove(), 300);
-    }, 2000);
-}
-
-// Кнопка наверх
-document.getElementById("top").onclick = function() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-};
-
-// Добавляем стили для уведомлений
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Проверка при загрузке
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("✅ Сайт загружен!");
-    
-    // Проверяем поддержку clipboard
-    if (!navigator.clipboard) {
-        console.log("ℹ️ Используется fallback метод копирования");
-    }
-    
-    // Эффект печати для заголовка
-    const title = document.querySelector(".title");
-    const originalText = title.innerText;
-    title.innerText = "";
-    let i = 0;
-    
-    function typeWriter() {
-        if (i < originalText.length) {
-            title.innerText += originalText.charAt(i);
-            i++;
-            setTimeout(typeWriter, 50);
-        }
-    }
-    typeWriter();
-});
+    <script src="script.js"></script>
+</body>
+</html>
