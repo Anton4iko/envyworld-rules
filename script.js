@@ -1,151 +1,164 @@
-// Функция копирования одного правила
-function copy(button) {
-    let textElement = button.parentElement.querySelector(".ruleText");
-    let titleElement = button.parentElement.querySelector("h2");
-    let text = `${titleElement.innerText}\n\n${textElement.innerText}`;
-    
-    navigator.clipboard.writeText(text).then(() => {
-        let originalText = button.innerHTML;
-        button.innerHTML = "✅ Скопировано!";
-        button.style.transform = "scale(0.95)";
+// ========== КОПИРОВАНИЕ ОДНОГО ПРАВИЛА ==========
+document.querySelectorAll('.copy-rule').forEach(button => {
+    button.addEventListener('click', function() {
+        const ruleCard = this.closest('.rule-card');
+        const title = ruleCard.querySelector('h2').innerText;
+        const text = ruleCard.querySelector('.rule-text').innerText;
+        const fullText = `${title}\n\n${text}`;
         
-        setTimeout(() => {
-            button.innerHTML = "📋 Копировать правило";
-            button.style.transform = "";
-        }, 1500);
-    }).catch(err => {
-        console.error('Ошибка копирования: ', err);
-        alert("❌ Не удалось скопировать текст");
-        fallbackCopy(text);
+        copyToClipboard(fullText, this);
     });
-}
+});
 
-// Функция копирования всех правил
-function copyAll() {
-    let rules = document.querySelectorAll(".rule");
-    let text = "📜 ПРАВИЛА ПРОЕКТА ENVYWORLD 📜\n\n";
-    let separator = "=".repeat(50) + "\n\n";
+// ========== КОПИРОВАНИЕ ВСЕХ ПРАВИЛ ==========
+document.getElementById('copyAllBtn').addEventListener('click', function() {
+    const rules = document.querySelectorAll('.rule-card');
+    let allText = '📜 ПРАВИЛА ПРОЕКТА ENVYWORLD 📜\n\n';
+    allText += '='.repeat(50) + '\n\n';
     
     rules.forEach((rule, index) => {
-        let title = rule.querySelector("h2").innerText;
-        let content = rule.querySelector(".ruleText").innerText;
-        text += `${title}\n${content}\n\n${separator}`;
+        const title = rule.querySelector('h2').innerText;
+        const text = rule.querySelector('.rule-text').innerText;
+        allText += `${title}\n${text}\n\n`;
+        allText += '-'.repeat(40) + '\n\n';
     });
     
-    text += "📅 Дата последнего обновления: " + new Date().toLocaleDateString('ru-RU') + "\n";
-    text += "✨ Соблюдайте правила, уважайте друг друга! ✨";
+    allText += '='.repeat(50) + '\n';
+    allText += `📅 Дата: ${new Date().toLocaleDateString('ru-RU')}\n`;
+    allText += '✨ Соблюдайте правила и уважайте других игроков! ✨';
     
-    navigator.clipboard.writeText(text).then(() => {
-        showNotification("✅ Все правила успешно скопированы!", "success");
-    }).catch(err => {
-        console.error('Ошибка копирования: ', err);
-        fallbackCopy(text);
-        showNotification("❌ Не удалось скопировать правила", "error");
-    });
+    copyToClipboard(allText, this);
+});
+
+// ========== УНИВЕРСАЛЬНАЯ ФУНКЦИЯ КОПИРОВАНИЯ ==========
+function copyToClipboard(text, button) {
+    // Сохраняем оригинальный текст кнопки
+    const originalText = button.innerHTML;
+    
+    // Пробуем современный метод
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            showCopySuccess(button, originalText);
+        }).catch(() => {
+            fallbackCopy(text, button, originalText);
+        });
+    } else {
+        fallbackCopy(text, button, originalText);
+    }
 }
 
-// Функция поиска правил
-function searchRules() {
-    let input = document.getElementById("search");
-    let searchText = input.value.toLowerCase().trim();
-    let rules = document.querySelectorAll(".rule");
+// ========== FALLBACK ДЛЯ СТАРЫХ БРАУЗЕРОВ ==========
+function fallbackCopy(text, button, originalText) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+        const success = document.execCommand('copy');
+        if (success) {
+            showCopySuccess(button, originalText);
+        } else {
+            showCopyError(button, originalText);
+        }
+    } catch (err) {
+        showCopyError(button, originalText);
+    }
+    
+    document.body.removeChild(textarea);
+}
+
+// ========== ВИЗУАЛЬНАЯ ОБРАТНАЯ СВЯЗЬ ПРИ УСПЕХЕ ==========
+function showCopySuccess(button, originalText) {
+    button.innerHTML = '✅ Скопировано!';
+    button.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.style.transform = '';
+    }, 1500);
+}
+
+// ========== ВИЗУАЛЬНАЯ ОБРАТНАЯ СВЯЗЬ ПРИ ОШИБКЕ ==========
+function showCopyError(button, originalText) {
+    button.innerHTML = '❌ Ошибка!';
+    button.style.background = 'linear-gradient(135deg, #ff0000, #cc0000)';
+    
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.style.background = '';
+    }, 1500);
+}
+
+// ========== ПОИСК ПО ПРАВИЛАМ ==========
+document.getElementById('search').addEventListener('input', function() {
+    const searchText = this.value.toLowerCase().trim();
+    const rules = document.querySelectorAll('.rule-card');
     let foundCount = 0;
     
     rules.forEach(rule => {
-        let text = rule.innerText.toLowerCase();
-        let title = rule.querySelector("h2").innerText.toLowerCase();
+        const text = rule.innerText.toLowerCase();
         
-        if (searchText === "" || text.includes(searchText)) {
-            rule.style.display = "block";
-            rule.style.animation = "none";
-            rule.offsetHeight;
-            rule.style.animation = "fadeRule 0.5s ease";
+        if (searchText === '' || text.includes(searchText)) {
+            rule.style.display = 'block';
+            rule.style.animation = 'fadeInUp 0.5s ease';
             foundCount++;
-            
-            // Подсветка найденного текста
-            if (searchText !== "") {
-                highlightText(rule, searchText);
-            } else {
-                removeHighlight(rule);
-            }
         } else {
-            rule.style.display = "none";
+            rule.style.display = 'none';
         }
     });
     
     // Визуальная обратная связь
-    let searchInput = document.getElementById("search");
-    if (searchText !== "") {
+    if (searchText !== '') {
         if (foundCount > 0) {
-            searchInput.style.boxShadow = "0 0 20px #00ff00, 0 0 10px #00ff00";
-            showNotification(`🔍 Найдено правил: ${foundCount}`, "info");
+            this.style.boxShadow = '0 0 20px rgba(0, 255, 0, 0.5)';
+            showToast(`🔍 Найдено: ${foundCount}`, 'success');
         } else {
-            searchInput.style.boxShadow = "0 0 20px #ff0000, 0 0 10px #ff0000";
-            showNotification("❌ Ничего не найдено", "error");
+            this.style.boxShadow = '0 0 20px rgba(255, 0, 0, 0.5)';
+            showToast('❌ Ничего не найдено', 'error');
         }
         setTimeout(() => {
-            searchInput.style.boxShadow = "";
+            this.style.boxShadow = '';
         }, 1000);
-    } else {
-        removeAllHighlights();
     }
-}
+});
 
-// Подсветка текста
-function highlightText(rule, searchText) {
-    let textElement = rule.querySelector(".ruleText");
-    let originalText = textElement.innerHTML;
-    let regex = new RegExp(`(${searchText})`, 'gi');
-    let highlightedText = originalText.replace(regex, '<mark class="search-highlight">$1</mark>');
-    textElement.innerHTML = highlightedText;
-}
-
-function removeHighlight(rule) {
-    let textElement = rule.querySelector(".ruleText");
-    textElement.innerHTML = textElement.innerText;
-}
-
-function removeAllHighlights() {
-    document.querySelectorAll(".ruleText").forEach(element => {
-        element.innerHTML = element.innerText;
-    });
-}
-
-// Уведомления
-function showNotification(message, type) {
-    // Создаем уведомление
-    let notification = document.createElement("div");
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = message;
-    notification.style.cssText = `
+// ========== УВЕДОМЛЕНИЯ (TOAST) ==========
+function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.innerHTML = message;
+    toast.style.cssText = `
         position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 12px 20px;
-        border-radius: 10px;
-        color: white;
+        bottom: 100px;
+        right: 30px;
+        padding: 12px 24px;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(10px);
+        color: ${type === 'success' ? '#00ff00' : type === 'error' ? '#ff4444' : '#ff00c8'};
+        border-radius: 50px;
         font-weight: bold;
         z-index: 10000;
-        animation: slideIn 0.5s ease;
-        backdrop-filter: blur(10px);
-        background: rgba(0, 0, 0, 0.8);
-        border-left: 4px solid ${type === 'success' ? '#00ff00' : type === 'error' ? '#ff0000' : '#ff00c8'};
+        animation: slideInRight 0.3s ease;
+        border-left: 4px solid ${type === 'success' ? '#00ff00' : type === 'error' ? '#ff4444' : '#ff00c8'};
+        font-size: 14px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     `;
     
-    document.body.appendChild(notification);
+    document.body.appendChild(toast);
     
     setTimeout(() => {
-        notification.style.animation = "slideOut 0.5s ease";
-        setTimeout(() => {
-            notification.remove();
-        }, 500);
-    }, 3000);
+        toast.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
 }
 
-// Добавляем стили для уведомлений
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
+// Добавляем анимации для уведомлений
+const toastStyle = document.createElement('style');
+toastStyle.textContent = `
+    @keyframes slideInRight {
         from {
             transform: translateX(100%);
             opacity: 0;
@@ -156,7 +169,7 @@ style.textContent = `
         }
     }
     
-    @keyframes slideOut {
+    @keyframes slideOutRight {
         from {
             transform: translateX(0);
             opacity: 1;
@@ -164,74 +177,45 @@ style.textContent = `
         to {
             transform: translateX(100%);
             opacity: 0;
-        }
-    }
-    
-    .search-highlight {
-        background: rgba(255, 0, 200, 0.4);
-        border-radius: 3px;
-        padding: 0 2px;
-        animation: pulse 0.5s ease;
-        color: white;
-        font-weight: bold;
-    }
-    
-    @keyframes pulse {
-        0%, 100% {
-            background: rgba(255, 0, 200, 0.4);
-        }
-        50% {
-            background: rgba(255, 0, 200, 0.8);
         }
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(toastStyle);
 
-// Кнопка "Наверх" с плавным скроллом
-document.getElementById("top").onclick = function() {
+// ========== КНОПКА НАВЕРХ ==========
+document.getElementById('goTopBtn').addEventListener('click', function() {
     window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: 'smooth'
     });
-};
+});
 
-// Fallback для старых браузеров
-function fallbackCopy(text) {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-}
-
-// Анимация при загрузке
-document.addEventListener("DOMContentLoaded", function() {
-    // Плавное появление
-    const container = document.querySelector(".container");
-    container.style.opacity = "0";
-    
-    setTimeout(() => {
-        container.style.transition = "all 0.6s ease";
-        container.style.opacity = "1";
-    }, 100);
+// ========== АНИМАЦИЯ ПРИ ЗАГРУЗКЕ ==========
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ EnvyWorld Rules загружен!');
     
     // Эффект печати для заголовка
-    const title = document.querySelector(".title");
-    const originalText = title.innerText;
-    title.innerText = "";
+    const title = document.querySelector('.title');
+    const originalTitle = title.innerText;
+    title.innerText = '';
     let i = 0;
     
     function typeWriter() {
-        if (i < originalText.length) {
-            title.innerText += originalText.charAt(i);
+        if (i < originalTitle.length) {
+            title.innerText += originalTitle.charAt(i);
             i++;
-            setTimeout(typeWriter, 50);
+            setTimeout(typeWriter, 60);
         }
     }
     typeWriter();
+    
+    // Приветственное уведомление
+    setTimeout(() => {
+        showToast('✨ Добро пожаловать в EnvyWorld!', 'info');
+    }, 500);
 });
 
-// Обработка ошибок и отладка
-console.log("✅ EnvyWorld Rules загружен успешно!");
-console.log("📋 Все функции активны: поиск, копирование, анимации");
+// ========== ПОДДЕРЖКА СТАРЫХ БРАУЗЕРОВ ==========
+if (!navigator.clipboard) {
+    console.log('ℹ️ Используется fallback метод копирования');
+}
