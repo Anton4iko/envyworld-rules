@@ -1,3 +1,4 @@
+/* Общие стили */
 * {
     margin: 0;
     padding: 0;
@@ -5,121 +6,63 @@
 }
 
 body {
-    margin: 0;
-    font-family: 'Segoe UI', 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(
-        -45deg,
-        #4c00ff,
-        #ff00c8,
-        #8b5cf6,
-        #ff4fd8,
-        #6a5cff
-    );
+    font-family: 'Segoe UI', 'Poppins', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6a00ff, #ff00c8, #8b00ff, #ff4d8c);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    color: white;
+    animation: gradientMove 12s ease infinite;
+    color: #ffffff;
     min-height: 100vh;
-    position: relative;
+    padding: 20px 0;
 }
 
-/* Анимированный градиент */
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    25% {
-        background-position: 50% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    75% {
-        background-position: 50% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+/* Анимация градиента */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
+/* Контейнер */
 .container {
-    width: 1000px;
-    max-width: 95%;
-    margin: auto;
-    padding: 40px 20px;
-    animation: fadeIn 1s ease;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Заголовок с анимацией */
+/* Заголовок */
 .title {
     text-align: center;
-    font-size: 60px;
-    margin-bottom: 40px;
-    text-shadow: 0 0 25px #ff00c8;
-    animation: titleGlow 2s infinite alternate, float 3s ease-in-out infinite;
-    background: linear-gradient(135deg, #fff, #ff00c8, #b266ff);
+    font-size: 52px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #fff, #ff99ff, #ff66cc);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-weight: bold;
+    text-shadow: 0 0 30px rgba(255, 0, 200, 0.5);
+    animation: titlePulse 2s ease-in-out infinite;
 }
 
-@keyframes titleGlow {
-    from {
-        text-shadow: 0 0 15px #ff00c8, 0 0 5px #ff00c8;
-    }
-    to {
-        text-shadow: 0 0 35px #ff00c8, 0 0 45px #ff4fd8;
-    }
+@keyframes titlePulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(255, 0, 200, 0.5); }
+    50% { text-shadow: 0 0 40px rgba(255, 0, 200, 0.8); }
 }
 
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-/* Поиск */
-.search-wrapper {
-    position: relative;
-    margin-bottom: 20px;
+/* Поле поиска */
+.search-box {
+    margin-bottom: 25px;
 }
 
 #search {
     width: 100%;
-    padding: 15px 20px 15px 50px;
-    border-radius: 15px;
+    padding: 15px 20px;
+    font-size: 16px;
     border: none;
-    font-size: 18px;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
+    color: white;
+    outline: none;
     transition: all 0.3s ease;
-    box-sizing: border-box;
-    font-family: inherit;
-}
-
-.search-icon {
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 20px;
-    pointer-events: none;
-    opacity: 0.7;
 }
 
 #search::placeholder {
@@ -127,300 +70,176 @@ body {
 }
 
 #search:focus {
-    outline: none;
-    box-shadow: 0 0 25px #ff00c8, 0 0 15px #ff00c8;
-    background: rgba(255, 255, 255, 0.25);
-    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.6);
 }
 
-/* Glassmorphism дизайн */
-.rule {
-    backdrop-filter: blur(15px);
-    background: rgba(0, 0, 0, 0.35);
-    padding: 25px;
-    border-radius: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Стеклянный эффект */
-.rule::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
+/* Кнопка копировать всё */
+.copy-all {
     width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s ease;
-}
-
-.rule:hover::before {
-    left: 100%;
-}
-
-/* Hover эффекты */
-.rule:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-        0 0 30px #ff00c8,
-        0 0 60px #7a5cff;
-    background: rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 0, 200, 0.5);
-}
-
-.rule h2 {
-    margin-bottom: 15px;
-    font-size: 28px;
-    background: linear-gradient(90deg, #fff, #ff00c8, #ff80e5);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    padding: 15px;
+    font-size: 18px;
     font-weight: bold;
-}
-
-.ruleText {
-    line-height: 1.8;
-    font-size: 16px;
-    margin-bottom: 15px;
-    color: rgba(255, 255, 255, 0.95);
-}
-
-/* Неоновые кнопки */
-button {
-    background: linear-gradient(135deg, #ff00c8, #7a5cff);
     border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff00c8, #8b00ff);
     color: white;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 15px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-size: 14px;
-    font-family: inherit;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 0, 200, 0.5);
-}
-
-/* Неоновое свечение кнопок */
-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-button:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-button:hover {
-    transform: scale(1.07) translateY(-2px);
-    box-shadow: 
-        0 0 20px #ff00c8,
-        0 0 35px #7a5cff;
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-.copyAll {
-    width: 100%;
-    font-size: 18px;
-    margin-bottom: 25px;
-    padding: 15px;
-    background: linear-gradient(135deg, #ff00c8, #9b4dff);
-    animation: neonPulse 2s infinite;
-}
-
-@keyframes neonPulse {
-    0%, 100% {
-        box-shadow: 0 0 10px #ff00c8, 0 0 20px #ff00c8;
-    }
-    50% {
-        box-shadow: 0 0 20px #ff00c8, 0 0 40px #ff00c8, 0 0 60px #ff4fd8;
-    }
-}
-
-/* Кнопка наверх */
-#top {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    font-size: 28px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff00c8, #6a5cff);
-    box-shadow: 0 0 25px #ff00c8;
     transition: all 0.3s ease;
-    z-index: 1000;
-    cursor: pointer;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: floatButton 2s ease-in-out infinite;
+    margin-bottom: 30px;
+    box-shadow: 0 0 15px rgba(255, 0, 200, 0.4);
 }
 
-@keyframes floatButton {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
+.copy-all:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(255, 0, 200, 0.7);
 }
 
-#top:hover {
-    transform: scale(1.2) rotate(360deg);
-    box-shadow: 0 0 35px #ff00c8, 0 0 50px #ff4fd8;
+.copy-all:active {
+    transform: translateY(1px);
 }
 
-#top:active {
-    transform: scale(0.95);
-}
-
-/* Анимация для поиска */
-@keyframes fadeRule {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.rule {
-    animation: fadeRule 0.5s ease;
-}
-
-/* Стили для скролла */
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ff00c8, #7a5cff);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #ff4fd8, #ff00c8);
-}
-
-/* Адаптация под телефон */
-@media (max-width: 950px) {
-    .container {
-        width: 95%;
-        padding: 20px 15px;
-    }
-    
-    .title {
-        font-size: 40px;
-    }
-    
-    .rule h2 {
-        font-size: 24px;
-    }
-    
-    .ruleText {
-        font-size: 14px;
-        line-height: 1.6;
-    }
-    
-    button {
-        padding: 10px 20px;
-        font-size: 13px;
-    }
-    
-    .copyAll {
-        font-size: 16px;
-        padding: 12px;
-    }
-    
-    #top {
-        right: 20px;
-        bottom: 20px;
-        width: 55px;
-        height: 55px;
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .title {
-        font-size: 32px;
-    }
-    
-    .rule {
-        padding: 18px;
-    }
-    
-    .rule h2 {
-        font-size: 20px;
-    }
-    
-    button {
-        width: 100%;
-    }
-    
-    #search {
-        font-size: 16px;
-        padding: 12px 15px 12px 45px;
-    }
-    
-    .search-icon {
-        font-size: 18px;
-        left: 12px;
-    }
-}
-
-/* Плавный скролл для всей страницы */
-html {
-    scroll-behavior: smooth;
-}
-
-/* Статус для поиска */
-.search-highlight {
-    background: rgba(255, 0, 200, 0.3);
-    border-radius: 5px;
-    padding: 2px;
-}
-
-/* Дополнительные эффекты */
-.rules-container {
-    animation: fadeInUp 0.8s ease;
+/* Карточки правил */
+.rule-card {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease;
 }
 
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.rule-card:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 30px rgba(255, 0, 200, 0.4);
+    border-color: rgba(255, 0, 200, 0.5);
+}
+
+.rule-card h2 {
+    font-size: 26px;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #fff, #ff99ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.rule-text {
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* Кнопка копировать правило */
+.copy-rule {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #ff66cc, #b84dff);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-rule:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 0, 200, 0.6);
+}
+
+.copy-rule:active {
+    transform: scale(0.98);
+}
+
+/* Кнопка наверх */
+.go-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff00c8, #8b00ff);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.5);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.go-top:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 0, 200, 0.8);
+}
+
+.go-top:active {
+    transform: scale(0.95);
+}
+
+/* Адаптация под телефон */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 36px;
+    }
+    
+    .rule-card h2 {
+        font-size: 22px;
+    }
+    
+    .rule-text {
+        font-size: 14px;
+    }
+    
+    .copy-all {
+        font-size: 16px;
+        padding: 12px;
+    }
+    
+    .go-top {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+    
+    .rule-card {
+        padding: 18px;
+    }
+    
+    .copy-rule {
+        width: 100%;
+    }
+}
+
+/* Плавный скролл */
+html {
+    scroll-behavior: smooth;
 }
