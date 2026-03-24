@@ -1,44 +1,60 @@
-// ========== КОПИРОВАНИЕ ОДНОГО НАКАЗАНИЯ ==========
+// Ждём полной загрузки страницы
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Скрипт загружен, инициализация...');
+    
+    // ========== КОПИРОВАНИЕ ОДНОГО НАКАЗАНИЯ ==========
     // Находим все кнопки копирования
     const copyButtons = document.querySelectorAll('.copy-punishment');
+    console.log('Найдено кнопок:', copyButtons.length);
     
     copyButtons.forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            // Получаем команду из атрибута data-cmd
-            const commandText = this.getAttribute('data-cmd');
+            e.stopPropagation();
             
-            if (commandText) {
+            // Получаем команду из атрибута data-cmd
+            let commandText = this.getAttribute('data-cmd');
+            
+            // Если data-cmd пустой, пробуем взять текст из соседнего элемента
+            if (!commandText || commandText === '') {
+                const parentCard = this.closest('.punishment-card');
+                const textDiv = parentCard.querySelector('.command-text');
+                if (textDiv) {
+                    commandText = textDiv.innerText;
+                }
+            }
+            
+            if (commandText && commandText !== '') {
                 copyToClipboard(commandText, this);
             } else {
                 console.error('Нет текста для копирования');
-                showToast('❌ Ошибка: нет текста для копирования', 'error');
+                alert('❌ Ошибка: нет текста для копирования');
             }
         });
     });
-});
-
-// ========== КОПИРОВАНИЕ ВСЕХ КОМАНД ==========
-document.getElementById('copyAllBtn').addEventListener('click', function() {
-    const punishments = document.querySelectorAll('.punishment-card');
-    let allText = '⚡ ENVYWORLD STAFF TOOLS ⚡\n';
-    allText += '='.repeat(55) + '\n\n';
     
-    punishments.forEach((card, index) => {
-        const button = card.querySelector('.copy-punishment');
-        const commandText = button.getAttribute('data-cmd');
-        if (commandText) {
-            allText += commandText + '\n\n';
-            allText += '-'.repeat(40) + '\n\n';
-        }
-    });
-    
-    allText += '='.repeat(55) + '\n';
-    allText += `📅 Дата: ${new Date().toLocaleDateString('ru-RU')}\n`;
-    allText += '✨ Копируй и используй для выдачи наказаний! ✨';
-    
-    copyToClipboard(allText, this);
+    // ========== КОПИРОВАНИЕ ВСЕХ КОМАНД ==========
+    const copyAllBtn = document.getElementById('copyAllBtn');
+    if (copyAllBtn) {
+        copyAllBtn.addEventListener('click', function() {
+            const punishments = document.querySelectorAll('.punishment-card');
+            let allText = '⚡ ENVYWORLD STAFF TOOLS ⚡\n';
+            allText += '='.repeat(55) + '\n\n';
+            
+            punishments.forEach((card, index) => {
+                const textDiv = card.querySelector('.command-text');
+                if (textDiv) {
+                    allText += textDiv.innerText + '\n\n';
+                    allText += '-'.repeat(40) + '\n\n';
+                }
+            });
+            
+            allText += '='.repeat(55) + '\n';
+            allText += '✨ Копируй и используй для выдачи наказаний! ✨';
+            
+            copyToClipboard(allText, this);
+        });
+    }
 });
 
 // ========== УНИВЕРСАЛЬНАЯ ФУНКЦИЯ КОПИРОВАНИЯ ==========
@@ -49,7 +65,6 @@ function copyToClipboard(text, button) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
             showCopySuccess(button, originalText);
-            showToast('✅ Команда скопирована!', 'success');
         }).catch((err) => {
             console.error('Clipboard error:', err);
             fallbackCopy(text, button, originalText);
@@ -75,15 +90,12 @@ function fallbackCopy(text, button, originalText) {
         const success = document.execCommand('copy');
         if (success) {
             showCopySuccess(button, originalText);
-            showToast('✅ Команда скопирована!', 'success');
         } else {
             showCopyError(button, originalText);
-            showToast('❌ Ошибка копирования', 'error');
         }
     } catch (err) {
         console.error('Fallback copy error:', err);
         showCopyError(button, originalText);
-        showToast('❌ Ошибка копирования', 'error');
     }
     
     document.body.removeChild(textarea);
@@ -177,18 +189,20 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ EnvyWorld Staff Tools загружен!');
     
     const title = document.querySelector('.title');
-    const originalTitle = title.innerText;
-    title.innerText = '';
-    let i = 0;
-    
-    function typeWriter() {
-        if (i < originalTitle.length) {
-            title.innerText += originalTitle.charAt(i);
-            i++;
-            setTimeout(typeWriter, 50);
+    if (title && title.innerText) {
+        const originalTitle = title.innerText;
+        title.innerText = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < originalTitle.length) {
+                title.innerText += originalTitle.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
         }
+        typeWriter();
     }
-    typeWriter();
     
     setTimeout(() => {
         showToast('✨ Готово! Нажми на любую команду чтобы скопировать', 'success');
