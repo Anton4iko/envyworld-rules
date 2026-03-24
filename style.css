@@ -1,4 +1,3 @@
-/* Общие стили */
 * {
     margin: 0;
     padding: 0;
@@ -15,25 +14,22 @@ body {
     padding: 20px 0;
 }
 
-/* Анимация градиента */
 @keyframes gradientMove {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* Контейнер */
 .container {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Заголовок */
 .title {
     text-align: center;
     font-size: 52px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     background: linear-gradient(135deg, #fff, #ff99ff, #ff66cc);
     -webkit-background-clip: text;
     background-clip: text;
@@ -47,34 +43,13 @@ body {
     50% { text-shadow: 0 0 40px rgba(255, 0, 200, 0.8); }
 }
 
-/* Поле поиска */
-.search-box {
-    margin-bottom: 25px;
+.subtitle {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+    opacity: 0.9;
 }
 
-#search {
-    width: 100%;
-    padding: 15px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-    color: white;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-#search::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-#search:focus {
-    background: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 20px rgba(255, 0, 200, 0.6);
-}
-
-/* Кнопка копировать всё */
 .copy-all {
     width: 100%;
     padding: 15px;
@@ -99,54 +74,53 @@ body {
     transform: translateY(1px);
 }
 
-/* Карточки правил */
-.rule-card {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 25px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    animation: fadeInUp 0.5s ease;
+.category-header {
+    margin: 30px 0 20px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.rule-card:hover {
-    transform: translateY(-5px);
-    background: rgba(0, 0, 0, 0.5);
-    box-shadow: 0 0 30px rgba(255, 0, 200, 0.4);
-    border-color: rgba(255, 0, 200, 0.5);
-}
-
-.rule-card h2 {
-    font-size: 26px;
-    margin-bottom: 15px;
+.category-header h2 {
+    font-size: 28px;
     background: linear-gradient(135deg, #fff, #ff99ff);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-.rule-text {
-    line-height: 1.6;
-    margin-bottom: 15px;
-    color: rgba(255, 255, 255, 0.95);
+.punishment-card {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
 }
 
-/* Кнопка копировать правило */
-.copy-rule {
-    padding: 10px 20px;
+.punishment-card:hover {
+    transform: translateX(5px);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.3);
+    border-color: rgba(255, 0, 200, 0.5);
+}
+
+.command-text {
+    flex: 1;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 14px;
+    font-family: 'Courier New', monospace;
+    word-break: break-word;
+}
+
+.copy-punishment {
+    padding: 10px 24px;
     font-size: 14px;
     font-weight: bold;
     border: none;
@@ -155,73 +129,45 @@ body {
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
-.copy-rule:hover {
+.copy-punishment:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 0, 200, 0.6);
+    box-shadow: 0 0 12px rgba(255, 0, 200, 0.6);
 }
 
-.copy-rule:active {
+.copy-punishment:active {
     transform: scale(0.98);
 }
 
-/* Кнопка наверх */
-.go-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ff00c8, #8b00ff);
-    border: none;
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    box-shadow: 0 0 20px rgba(255, 0, 200, 0.5);
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.go-top:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 30px rgba(255, 0, 200, 0.8);
-}
-
-.go-top:active {
-    transform: scale(0.95);
-}
-
-/* Адаптация под телефон */
-@media (max-width: 768px) {
-    .container {
-        padding: 15px;
+@media (max-width: 800px) {
+    .punishment-card {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
+    .copy-punishment {
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 600px) {
     .title {
         font-size: 36px;
     }
     
-    .rule-card h2 {
-        font-size: 22px;
-    }
-    
-    .rule-text {
-        font-size: 14px;
-    }
-    
-    .copy-all {
-        font-size: 16px;
-        padding: 12px;
-    }
-    
-    .go-top {
-        width: 45px;
-        height: 45px;
+    .category-header h2 {
         font-size: 24px;
-        bottom: 20px;
-        right: 20px;
+    }
+    
+    .command-text {
+        font-size: 12px;
+    }
+    
+    .copy-punishment {
+        width: 100%;
+        text-align: center;
     }
 }
 
@@ -230,16 +176,11 @@ body {
         font-size: 28px;
     }
     
-    .rule-card {
-        padding: 18px;
-    }
-    
-    .copy-rule {
-        width: 100%;
+    .punishment-card {
+        padding: 15px;
     }
 }
 
-/* Плавный скролл */
 html {
     scroll-behavior: smooth;
 }
