@@ -3,93 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>EnvyWorld Rules | Официальные правила</title>
+    <title>EnvyWorld | Наказания</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
         <h1 class="title">
-            ✨ EnvyWorld Rules ✨
+            ⚡ EnvyWorld Staff Tools ⚡
         </h1>
-
-        <div class="search-box">
-            <input type="text" id="search" placeholder="🔍 Поиск по правилам...">
+        
+        <div class="subtitle">
+            Нажми на кнопку — скопируй команду
         </div>
 
         <button class="copy-all" id="copyAllBtn">
-            📑 Копировать все правила
+            📑 Копировать все команды
         </button>
 
         <div class="rules-list">
-            <!-- Правило 1 -->
-            <div class="rule-card">
-                <h2>1. Общие правила</h2>
-                <div class="rule-text">
-                    • Игрок обязан соблюдать правила проекта.<br>
-                    • Незнание правил не освобождает от ответственности.<br>
-                    • Администрация имеет право изменять правила без предупреждения.<br>
-                    • Запрещён обход любых видов наказаний.<br>
-                    • Уважайте администрацию и других игроков.
-                </div>
-                <button class="copy-rule">📋 Копировать</button>
+            
+            <!-- ========== ИГРОВОЙ ЧАТ (МУТЫ) ========== -->
+            <div class="category-header">
+                <h2>💬 Игровой чат (Муты)</h2>
             </div>
-
-            <!-- Правило 2 -->
-            <div class="rule-card">
-                <h2>2. Правила чата</h2>
-                <div class="rule-text">
-                    • Запрещены оскорбления и провокации.<br>
-                    • Запрещён флуд, спам и чрезмерное использование капса.<br>
-                    • Запрещена реклама сторонних ресурсов.<br>
-                    • Запрещены угрозы в любой форме.<br>
-                    • Запрещён мат и нецензурная лексика.
-                </div>
-                <button class="copy-rule">📋 Копировать</button>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 20m Запрещено оскорблять, насмехаться и хамить другим игрокам. Относитесь уважительно к другим людям (/rules 2.1)</div>
+                <button class="copy-punishment" data-command="/mute ник 20m Запрещено оскорблять, насмехаться и хамить другим игрокам. Относитесь уважительно к другим людям (/rules 2.1)">📋 Копировать</button>
             </div>
-
-            <!-- Правило 3 -->
-            <div class="rule-card">
-                <h2>3. Игровой процесс</h2>
-                <div class="rule-text">
-                    • Запрещено использование читов и сторонних программ.<br>
-                    • Запрещён гриферство и порча чужих построек.<br>
-                    • Запрещён обман, мошенничество и вымогательство.<br>
-                    • Запрещена продажа игровых аккаунтов.<br>
-                    • Запрещено использование багов и ошибок игры.
-                </div>
-                <button class="copy-rule">📋 Копировать</button>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено оскорблять, насмехаться и хамить другим игрокам в /bc /toast /titlemsg и т.п.(/rules 2.1.1)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено оскорблять, насмехаться и хамить другим игрокам в /bc /toast /titlemsg и т.п.(/rules 2.1.1)">📋 Копировать</button>
             </div>
-
-            <!-- Правило 4 -->
-            <div class="rule-card">
-                <h2>4. Технические правила</h2>
-                <div class="rule-text">
-                    • Запрещено использование VPN для обхода блокировок.<br>
-                    • Запрещены DDoS-атаки на сервер.<br>
-                    • Запрещено создание множественных аккаунтов (мульти-аккаунтинг).<br>
-                    • Запрещена передача аккаунта третьим лицам.<br>
-                    • Соблюдайте безопасность своего аккаунта.
-                </div>
-                <button class="copy-rule">📋 Копировать</button>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 20m Запрещено упоминание родных лиц в оскорбительной или унизительной форме. (/rules 2.1.2)</div>
+                <button class="copy-punishment" data-command="/mute ник 20m Запрещено упоминание родных лиц в оскорбительной или унизительной форме. (/rules 2.1.2)">📋 Копировать</button>
             </div>
-
-            <!-- Правило 5 -->
-            <div class="rule-card">
-                <h2>5. Санкции и наказания</h2>
-                <div class="rule-text">
-                    • За нарушение правил применяются санкции.<br>
-                    • Предупреждение — за мелкие нарушения.<br>
-                    • Мут (блокировка чата) — за нарушения в чате.<br>
-                    • Бан (блокировка аккаунта) — за серьёзные нарушения.<br>
-                    • Перманентный бан — за особо тяжкие нарушения.
-                </div>
-                <button class="copy-rule">📋 Копировать</button>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено упоминание родных лиц в оскорбительной или унизительной форме в /bc /toast /titlemsg и т.п. (2.1.3)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено упоминание родных лиц в оскорбительной или унизительной форме в /bc /toast /titlemsg и т.п. (2.1.3)">📋 Копировать</button>
             </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 20m Запрещено оскорблять, насмехаться и хамить в сторону государства, национальности или управляющей власти. (2.1.4)</div>
+                <button class="copy-punishment" data-command="/mute ник 20m Запрещено оскорблять, насмехаться и хамить в сторону государства, национальности или управляющей власти. (2.1.4)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 25m Запрещено флудить (Флуд - это сообщения в чате, занимающие большие объёмы и повторяющие 3 и более раз).(2.2)</div>
+                <button class="copy-punishment" data-command="/mute ник 25m Запрещено флудить (Флуд - это сообщения в чате, занимающие большие объёмы и повторяющие 3 и более раз).(2.2)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 1h Запрещено отправлять сомнительные или внешние ссылки. Подробнее (/rules 2.4)</div>
+                <button class="copy-punishment" data-command="/mute ник 1h Запрещено отправлять сомнительные или внешние ссылки. Подробнее (/rules 2.4)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 3h Запрещено отправлять в чат провокационные сообщение и сообщения которые подстрекают третьи лица на нарушение правил (/rules 2.5)</div>
+                <button class="copy-punishment" data-command="/mute ник 3h Запрещено отправлять в чат провокационные сообщение и сообщения которые подстрекают третьи лица на нарушение правил (/rules 2.5)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 15m Запрещено выпрашивать что-либо у донатеров. (попрошайничество) (/rules 2.6)</div>
+                <button class="copy-punishment" data-command="/mute ник 15m Запрещено выпрашивать что-либо у донатеров. (попрошайничество) (/rules 2.6)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 2h Запрещено рекламировать сомнительные игровые услуги. Дополнительно в [Пояснении 6]. (/rules 2.7)</div>
+                <button class="copy-punishment" data-command="/mute ник 2h Запрещено рекламировать сомнительные игровые услуги. Дополнительно в [Пояснении 6]. (/rules 2.7)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 3h Запрещено продавать и покупать донат/ключи за игровые деньги/ресурсы. (/rules 4.4)</div>
+                <button class="copy-punishment" data-command="/mute ник 3h Запрещено продавать и покупать донат/ключи за игровые деньги/ресурсы. (/rules 4.4)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/mute ник 1h Запрещено любое неадекватное использование голосового чата. Подробнее в [Пояснении 9]. (/rules 4.5)</div>
+                <button class="copy-punishment" data-command="/mute ник 1h Запрещено любое неадекватное использование голосового чата. Подробнее в [Пояснении 9]. (/rules 4.5)">📋 Копировать</button>
+            </div>
+            
+            <!-- ========== ПРЕДУПРЕЖДЕНИЯ ========== -->
+            <div class="category-header">
+                <h2>⚠️ Предупреждения (Варны)</h2>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено убийство других игроков путём телепортации их к себе, телепортации к ним, с помощью ловушки в своём регионе или с помощью использования любых команд. (/rules 3.6)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено убийство других игроков путём телепортации их к себе, телепортации к ним, с помощью ловушки в своём регионе или с помощью использования любых команд. (/rules 3.6)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректная причина бана (самонаказание)</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректная причина бана (самонаказание)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректная причина мута (самонаказание)</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректная причина мута (самонаказание)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректный бан (такого игрока не существует)</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректный бан (такого игрока не существует)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректный мут (такого игрока не существует)</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректный мут (такого игрока не существует)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректная причина размута</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректная причина размута">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Некорректная причина разбана</div>
+                <button class="copy-punishment" data-command="/warn ник Некорректная причина разбана">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено выдавать себя за того, кем не являешься на самом деле. (другого игрока, персонал проекта) (/rules 3.13)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено выдавать себя за того, кем не являешься на самом деле. (другого игрока, персонал проекта) (/rules 3.13)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено принимать любые действия, по отношению диалога, просматриваемого через слежку. (/cfg) (/rules 4.2)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено принимать любые действия, по отношению диалога, просматриваемого через слежку. (/cfg) (/rules 4.2)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено ставить себе или другим игрокам префиксы оскорбительного характера (/rules 4.3)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено ставить себе или другим игрокам префиксы оскорбительного характера (/rules 4.3)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/warn ник Запрещено строить половые органы и порнографию в любых видах её проявления. (/rules 3.9)</div>
+                <button class="copy-punishment" data-command="/warn ник Запрещено строить половые органы и порнографию в любых видах её проявления. (/rules 3.9)">📋 Копировать</button>
+            </div>
+            
+            <!-- ========== БАНЫ ========== -->
+            <div class="category-header">
+                <h2>🔨 Баны</h2>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/ban ник 4h Запрещено изменять инвентарь игроку без его разрешения (/invsee и. т. п.) (/rules 4.1)</div>
+                <button class="copy-punishment" data-command="/ban ник 4h Запрещено изменять инвентарь игроку без его разрешения (/invsee и. т. п.) (/rules 4.1)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/ban ник 24h Запрещено пытаться завладеть чужим аккаунтом, выманивать пароли игроков и взламывать аккаунты. (/rules 3.1)</div>
+                <button class="copy-punishment" data-command="/ban ник 24h Запрещено пытаться завладеть чужим аккаунтом, выманивать пароли игроков и взламывать аккаунты. (/rules 3.1)">📋 Копировать</button>
+            </div>
+            
+            <div class="punishment-card">
+                <div class="command-text">/ban ник 1h Запрещено разрушать или переделывать чужие регионы без разрешения владельца региона. (/rules 3.5)</div>
+                <button class="copy-punishment" data-command="/ban ник 1h Запрещено разрушать или переделывать чужие регионы без разрешения владельца региона. (/rules 3.5)">📋 Копировать</button>
+            </div>
+            
         </div>
     </div>
-
-    <button class="go-top" id="goTopBtn">⬆️</button>
 
     <script src="script.js"></script>
 </body>
