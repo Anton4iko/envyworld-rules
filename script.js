@@ -1,8 +1,21 @@
 // ========== КОПИРОВАНИЕ ОДНОГО НАКАЗАНИЯ ==========
-document.querySelectorAll('.copy-punishment').forEach(button => {
-    button.addEventListener('click', function() {
-        const commandText = this.getAttribute('data-command');
-        copyToClipboard(commandText, this);
+document.addEventListener('DOMContentLoaded', function() {
+    // Находим все кнопки копирования
+    const copyButtons = document.querySelectorAll('.copy-punishment');
+    
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Получаем команду из атрибута data-cmd
+            const commandText = this.getAttribute('data-cmd');
+            
+            if (commandText) {
+                copyToClipboard(commandText, this);
+            } else {
+                console.error('Нет текста для копирования');
+                showToast('❌ Ошибка: нет текста для копирования', 'error');
+            }
+        });
     });
 });
 
@@ -13,9 +26,12 @@ document.getElementById('copyAllBtn').addEventListener('click', function() {
     allText += '='.repeat(55) + '\n\n';
     
     punishments.forEach((card, index) => {
-        const commandText = card.querySelector('.copy-punishment').getAttribute('data-command');
-        allText += commandText + '\n\n';
-        allText += '-'.repeat(40) + '\n\n';
+        const button = card.querySelector('.copy-punishment');
+        const commandText = button.getAttribute('data-cmd');
+        if (commandText) {
+            allText += commandText + '\n\n';
+            allText += '-'.repeat(40) + '\n\n';
+        }
     });
     
     allText += '='.repeat(55) + '\n';
@@ -29,13 +45,17 @@ document.getElementById('copyAllBtn').addEventListener('click', function() {
 function copyToClipboard(text, button) {
     const originalText = button.innerHTML;
     
+    // Современный метод
     if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(() => {
             showCopySuccess(button, originalText);
-        }).catch(() => {
+            showToast('✅ Команда скопирована!', 'success');
+        }).catch((err) => {
+            console.error('Clipboard error:', err);
             fallbackCopy(text, button, originalText);
         });
     } else {
+        // Fallback для старых браузеров
         fallbackCopy(text, button, originalText);
     }
 }
@@ -49,16 +69,21 @@ function fallbackCopy(text, button, originalText) {
     textarea.style.left = '-9999px';
     document.body.appendChild(textarea);
     textarea.select();
+    textarea.focus();
     
     try {
         const success = document.execCommand('copy');
         if (success) {
             showCopySuccess(button, originalText);
+            showToast('✅ Команда скопирована!', 'success');
         } else {
             showCopyError(button, originalText);
+            showToast('❌ Ошибка копирования', 'error');
         }
     } catch (err) {
+        console.error('Fallback copy error:', err);
         showCopyError(button, originalText);
+        showToast('❌ Ошибка копирования', 'error');
     }
     
     document.body.removeChild(textarea);
@@ -87,23 +112,29 @@ function showCopyError(button, originalText) {
 
 // ========== УВЕДОМЛЕНИЯ ==========
 function showToast(message, type = 'success') {
+    // Удаляем старые уведомления
+    const oldToasts = document.querySelectorAll('.custom-toast');
+    oldToasts.forEach(toast => toast.remove());
+    
     const toast = document.createElement('div');
+    toast.className = 'custom-toast';
     toast.innerHTML = message;
     toast.style.cssText = `
         position: fixed;
         bottom: 30px;
         right: 30px;
-        padding: 12px 24px;
-        background: rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(10px);
+        padding: 14px 28px;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(12px);
         color: ${type === 'success' ? '#00ff00' : '#ff4444'};
         border-radius: 50px;
         font-weight: bold;
         z-index: 10000;
         animation: slideInRight 0.3s ease;
         border-left: 4px solid ${type === 'success' ? '#00ff00' : '#ff4444'};
-        font-size: 14px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        font-size: 16px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        font-family: 'Segoe UI', sans-serif;
     `;
     
     document.body.appendChild(toast);
@@ -111,7 +142,7 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.style.animation = 'slideOutRight 0.3s ease';
         setTimeout(() => toast.remove(), 300);
-    }, 2500);
+    }, 2000);
 }
 
 // Добавляем анимации для уведомлений
